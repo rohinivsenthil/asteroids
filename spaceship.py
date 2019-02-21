@@ -19,3 +19,15 @@ class Spaceship(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=pos)
         self.mask = pygame.mask.from_surface(self.image)
 
+        self.angle = 0
+
+    def rotate(self, angle):
+        self.angle += angle
+
+        self.image = pygame.transform.rotate(spaceship_surface, -self.angle)
+
+        center = self.rect.center
+        self.rect = self.image.get_rect(center=center)
+
+        self.mask = pygame.mask.from_surface(self.image)
+
