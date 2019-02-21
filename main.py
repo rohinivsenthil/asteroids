@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from spaceship import Spaceship
 
 
 def main():
@@ -11,6 +12,11 @@ def main():
 
     background = pygame.Color(0, 0, 0)
 
+    all_sprites = pygame.sprite.Group()
+
+    player = Spaceship((screen_size[0] // 2, screen_size[1] // 2))
+    all_sprites.add(player)
+
     clock = pygame.time.Clock()
 
     exit = False
@@ -21,6 +27,7 @@ def main():
                 exit = True
 
         screen.fill(background)
+        all_sprites.draw(screen)
 
         pygame.display.update()
 
