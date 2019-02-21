@@ -1,5 +1,8 @@
 {
 	"screenSize": [960, 720],
+	"bullet": {
+		"speed": 17
+	},
 	"spaceship": {
 		"acceleration": 0.15,
 		"maxSpeed": 15
