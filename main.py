@@ -26,6 +26,13 @@ def main():
             if event.type == QUIT:
                 exit = True
 
+        keys = pygame.key.get_pressed()
+
+        if keys[K_LEFT]:
+            player.rotate(-2)
+        if keys[K_RIGHT]:
+            player.rotate(2)
+
         screen.fill(background)
         all_sprites.draw(screen)
 
