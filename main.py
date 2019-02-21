@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 
 
 def main():
@@ -14,7 +15,7 @@ def main():
 
     while not exit:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == QUIT:
                 exit = True
 
         screen.fill(background)
