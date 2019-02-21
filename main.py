@@ -11,6 +11,8 @@ def main():
 
     background = pygame.Color(0, 0, 0)
 
+    clock = pygame.time.Clock()
+
     exit = False
 
     while not exit:
@@ -21,6 +23,8 @@ def main():
         screen.fill(background)
 
         pygame.display.update()
+
+        clock.tick(60)
 
     pygame.quit()
 
