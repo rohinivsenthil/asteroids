@@ -1,5 +1,9 @@
+import math
 import pygame
 from pygame.locals import *
+
+
+ACCELERATION = 0.15
 
 
 spaceship_surface = pygame.Surface((30, 30), SRCALPHA, 32)
@@ -20,6 +24,10 @@ class Spaceship(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
         self.angle = 0
+
+    def accelerate(self):
+        self.speed[0] += ACCELERATION * math.sin(math.radians(self.angle))
+        self.speed[1] += ACCELERATION * -math.cos(math.radians(self.angle))
 
     def rotate(self, angle):
         self.angle += angle
