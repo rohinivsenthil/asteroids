@@ -46,8 +46,9 @@ def main():
         if keys[K_UP]:
             player.accelerate()
 
-        player.pos[0] %= SCREEN_SIZE[0]
-        player.pos[1] %= SCREEN_SIZE[1]
+        for sprite in all_sprites:
+            sprite.pos[0] %= SCREEN_SIZE[0]
+            sprite.pos[1] %= SCREEN_SIZE[1]
 
         all_sprites.update()
 
