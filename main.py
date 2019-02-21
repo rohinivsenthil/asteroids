@@ -9,6 +9,7 @@ with open('config.json') as configfile:
     config = json.load(configfile)
 
 SCREEN_SIZE = config['screenSize']
+FRAMERATE = config['framerate']
 
 
 def main():
@@ -57,7 +58,7 @@ def main():
 
         pygame.display.update()
 
-        clock.tick(60)
+        clock.tick(FRAMERATE)
 
     pygame.quit()
 
