@@ -8,12 +8,18 @@ def main():
     screen_size = (960, 720)
     screen = pygame.display.set_mode(screen_size)
 
+    background = pygame.Color(0, 0, 0)
+
     exit = False
 
     while not exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit = True
+
+        screen.fill(background)
+
+        pygame.display.update()
 
     pygame.quit()
 
