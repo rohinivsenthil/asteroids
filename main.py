@@ -35,7 +35,6 @@ def main():
 
         if keys[K_UP]:
             player.accelerate()
-            print(player.speed)
 
         all_sprites.update()
 
