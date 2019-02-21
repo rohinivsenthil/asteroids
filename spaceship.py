@@ -4,6 +4,8 @@ import json
 import pygame
 from pygame.locals import *
 
+from bullet import Bullet
+
 
 with open('config.json') as configfile:
     config = json.load(configfile)['spaceship']
@@ -47,6 +49,9 @@ class Spaceship(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=center)
 
         self.mask = pygame.mask.from_surface(self.image)
+
+    def shoot(self):
+        return Bullet(self.angle, self.pos)
 
     def update(self):
         self.speed[0] *= 1 - (ACCELERATION / MAX_SPEED)
