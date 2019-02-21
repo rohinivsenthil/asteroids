@@ -33,6 +33,12 @@ def main():
         if keys[K_RIGHT]:
             player.rotate(2)
 
+        if keys[K_UP]:
+            player.accelerate()
+            print(player.speed)
+
+        all_sprites.update()
+
         screen.fill(background)
         all_sprites.draw(screen)
 
