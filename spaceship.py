@@ -1,10 +1,15 @@
 import math
+import json
+
 import pygame
 from pygame.locals import *
 
 
-ACCELERATION = 0.15
-MAX_SPEED = 15
+with open('config.json') as configfile:
+    config = json.load(configfile)['spaceship']
+
+ACCELERATION = config['acceleration']
+MAX_SPEED = config['maxSpeed']
 
 
 spaceship_surface = pygame.Surface((30, 30), SRCALPHA, 32)

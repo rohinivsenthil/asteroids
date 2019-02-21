@@ -1,20 +1,27 @@
+import json
+
 import pygame
 from pygame.locals import *
 from spaceship import Spaceship
+
+
+with open('config.json') as configfile:
+    config = json.load(configfile)
+
+SCREEN_SIZE = config['screenSize']
 
 
 def main():
     pygame.init()
     pygame.display.set_caption("Asteroids")
 
-    screen_size = (960, 720)
-    screen = pygame.display.set_mode(screen_size)
+    screen = pygame.display.set_mode(SCREEN_SIZE)
 
     background = pygame.Color(0, 0, 0)
 
     all_sprites = pygame.sprite.Group()
 
-    player = Spaceship((screen_size[0] // 2, screen_size[1] // 2))
+    player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
     all_sprites.add(player)
 
     clock = pygame.time.Clock()
@@ -36,8 +43,8 @@ def main():
         if keys[K_UP]:
             player.accelerate()
 
-        player.pos[0] %= screen_size[0]
-        player.pos[1] %= screen_size[1]
+        player.pos[0] %= SCREEN_SIZE[0]
+        player.pos[1] %= SCREEN_SIZE[1]
 
         all_sprites.update()
 

@@ -1,0 +1,7 @@
+{
+	"screenSize": [960, 720],
+	"spaceship": {
+		"acceleration": 0.15,
+		"maxSpeed": 15
+	}
+}
