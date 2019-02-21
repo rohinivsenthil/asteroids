@@ -36,6 +36,9 @@ def main():
         if keys[K_UP]:
             player.accelerate()
 
+        player.pos[0] %= screen_size[0]
+        player.pos[1] %= screen_size[1]
+
         all_sprites.update()
 
         screen.fill(background)
