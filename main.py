@@ -33,6 +33,9 @@ def main():
             if event.type == QUIT:
                 exit = True
 
+            if (event.type == KEYDOWN) and (event.key == K_SPACE):
+                all_sprites.add(player.shoot())
+
         keys = pygame.key.get_pressed()
 
         if keys[K_LEFT]:
