@@ -1,7 +1,10 @@
 import json
+import random
 
 import pygame
 from pygame.locals import *
+
+from asteroid import Asteroid
 from spaceship import Spaceship
 
 
@@ -21,9 +24,22 @@ def main():
     background = pygame.Color(0, 0, 0)
 
     all_sprites = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
     player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
     all_sprites.add(player)
+
+    if random.uniform(0, sum(SCREEN_SIZE)) < SCREEN_SIZE[0]:
+        t = random.randint(0, 2 * SCREEN_SIZE[0])
+        pos = (t % SCREEN_SIZE[0], SCREEN_SIZE[1] if t > SCREEN_SIZE[0] else 0)
+    else:
+        t = random.randint(0, 2 * SCREEN_SIZE[1])
+        pos = (t % SCREEN_SIZE[1], SCREEN_SIZE[0] if t > SCREEN_SIZE[1] else 0)
+
+    speed = (random.uniform(1, 2), random.uniform(1, 2))
+    asteroid = Asteroid(50, speed, pos)
+    all_sprites.add(Asteroid(50, speed, pos))
+    asteroids.add(Asteroid(50, speed, pos))
 
     clock = pygame.time.Clock()
 
