@@ -6,21 +6,14 @@ from pygame.locals import *
 
 from bullet import Bullet
 
-
 with open('config.json') as configfile:
     config = json.load(configfile)['spaceship']
 
 ACCELERATION = config['acceleration']
 MAX_SPEED = config['maxSpeed']
 
-
 spaceship_surface = pygame.Surface((30, 30), SRCALPHA, 32)
-pygame.draw.polygon(
-    spaceship_surface,
-    pygame.Color(0, 0, 255),
-    [(0, 30), (15, 0), (30, 30), (15, 20)],
-    2
-)
+pygame.draw.polygon(spaceship_surface, pygame.Color(0, 0, 255), [(0, 30), (15, 0), (30, 30), (15, 20)], 2)
 
 
 class Spaceship(pygame.sprite.Sprite):
@@ -61,4 +54,3 @@ class Spaceship(pygame.sprite.Sprite):
         self.pos[1] += self.speed[1]
 
         self.rect.center = self.pos
-

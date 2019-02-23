@@ -7,7 +7,6 @@ from pygame.locals import *
 from asteroid import Asteroid
 from spaceship import Spaceship
 
-
 with open('config.json') as configfile:
     config = json.load(configfile)
 
@@ -25,6 +24,7 @@ def main():
 
     all_sprites = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    bullets = pygame.sprite.Group()
 
     player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
     all_sprites.add(player)
@@ -51,7 +51,9 @@ def main():
                 exit = True
 
             if (event.type == KEYDOWN) and (event.key == K_SPACE):
-                all_sprites.add(player.shoot())
+                bullet = player.shoot()
+                all_sprites.add(bullet)
+                bullets.add(bullet)
 
         keys = pygame.key.get_pressed()
 

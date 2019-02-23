@@ -4,13 +4,11 @@ import json
 import pygame
 from pygame.locals import *
 
-
 with open('config.json') as configfile:
     config = json.load(configfile)['bullet']
 
 SPEED = config['speed']
 MAX_DIST = config['maxDist']
-
 
 bullet_surface = pygame.Surface((5, 5), SRCALPHA, 32)
 pygame.draw.circle(bullet_surface, pygame.Color(0, 0, 255), (2, 2), 2)
@@ -27,10 +25,7 @@ class Bullet(pygame.sprite.Sprite):
         self.pos = list(pos)
         self.dist = 0
 
-        self.speed = [
-            math.sin(math.radians(angle)) * SPEED,
-            -math.cos(math.radians(angle)) * SPEED
-        ]
+        self.speed = [math.sin(math.radians(angle)) * SPEED, -math.cos(math.radians(angle)) * SPEED]
 
     def update(self):
         self.pos[0] += self.speed[0]

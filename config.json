@@ -1,5 +1,5 @@
 {
-	"framerate": 60,
+	"framerate": 10,
 	"screenSize": [960, 720],
 	"bullet": {
 		"speed": 17,
