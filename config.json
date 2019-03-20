@@ -1,6 +1,9 @@
 {
-	"framerate": 10,
+	"framerate": 60,
 	"screenSize": [960, 720],
+	"asteroid": {
+		"minRadius": 20
+	},
 	"bullet": {
 		"speed": 17,
 		"maxDist": 480

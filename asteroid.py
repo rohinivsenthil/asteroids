@@ -1,8 +1,15 @@
 import random
 import math
+import json
 
 import pygame
 from pygame.locals import *
+
+
+with open('config.json') as configfile:
+    config = json.load(configfile)['asteroid']
+
+MIN_RADIUS = config['minRadius']
 
 
 def linspace(start, stop, num_steps):
@@ -34,6 +41,7 @@ class Asteroid(pygame.sprite.Sprite):
 
         self.image = pygame.Surface((radius * 2, radius * 2), SRCALPHA, 32)
 
+        pygame.draw.polygon(self.image, pygame.Color(0, 0, 0), points)
         pygame.draw.polygon(self.image, pygame.Color(0, 0, 255), points, 2)
 
         self.rect = self.image.get_rect(center=pos)
@@ -43,6 +51,20 @@ class Asteroid(pygame.sprite.Sprite):
         self.speed = speed
 
         self.radius = radius
+
+    def split(self):
+        if self.radius // 2 < MIN_RADIUS:
+            return []
+
+        r = random.random() * 2 * math.pi
+        speed = [self.speed[0] + self.speed[1], self.speed[1] - self.speed[0]]
+        a1 = Asteroid(self.radius // 2, speed, self.pos)
+
+        r = random.random() * 2 * math.pi
+        speed = [self.speed[0] - self.speed[1], self.speed[1] + self.speed[0]]
+        a2 = Asteroid(self.radius // 2, speed, self.pos)
+
+        return [a1, a2]
 
     def update(self):
         self.pos[0] += self.speed[0]
