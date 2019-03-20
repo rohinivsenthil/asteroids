@@ -70,8 +70,10 @@ def main():
             sprite.pos[1] %= SCREEN_SIZE[1]
 
         collide_list = pygame.sprite.groupcollide(asteroids, bullets, True, True, pygame.sprite.collide_mask)
-        for collision in collide_list.items():
-                print(collision)
+        for asteroid in collide_list:
+            for i in asteroid.split():
+                asteroids.add(i)
+                all_sprites.add(i)
 
         all_sprites.update()
 
