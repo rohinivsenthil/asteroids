@@ -38,8 +38,8 @@ def main():
 
     speed = (random.uniform(1, 2), random.uniform(1, 2))
     asteroid = Asteroid(50, speed, pos)
-    all_sprites.add(Asteroid(50, speed, pos))
-    asteroids.add(Asteroid(50, speed, pos))
+    all_sprites.add(asteroid)
+    asteroids.add(asteroid)
 
     clock = pygame.time.Clock()
 
@@ -68,6 +68,10 @@ def main():
         for sprite in all_sprites:
             sprite.pos[0] %= SCREEN_SIZE[0]
             sprite.pos[1] %= SCREEN_SIZE[1]
+
+        collide_list = pygame.sprite.groupcollide(asteroids, bullets, True, True, pygame.sprite.collide_mask)
+        for collision in collide_list.items():
+                print(collision)
 
         all_sprites.update()
 
