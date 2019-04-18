@@ -75,6 +75,10 @@ def main():
                 asteroids.add(i)
                 all_sprites.add(i)
 
+        if pygame.sprite.spritecollide(player, asteroids, True, pygame.sprite.collide_mask):
+            player.kill()
+            exit = True
+
         all_sprites.update()
 
         screen.fill(background)
