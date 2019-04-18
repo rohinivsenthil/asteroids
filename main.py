@@ -46,13 +46,14 @@ def main():
     clock = pygame.time.Clock()
 
     exit = False
+    paused = False
 
     while not exit:
         for event in pygame.event.get():
             if event.type == QUIT:
                 exit = True
 
-            if (event.type == KEYDOWN) and (event.key == K_SPACE):
+            if (not paused) and (event.type == KEYDOWN) and (event.key == K_SPACE):
                 bullet = player.shoot()
                 all_sprites.add(bullet)
                 bullets.add(bullet)
@@ -61,6 +62,8 @@ def main():
 
         if keys[K_q]:
             exit = True
+        if keys[K_p]:
+            paused ^= True
 
         if keys[K_LEFT]:
             player.rotate(-2)
@@ -70,27 +73,28 @@ def main():
         if keys[K_UP]:
             player.accelerate()
 
-        for sprite in all_sprites:
-            sprite.pos[0] %= SCREEN_SIZE[0]
-            sprite.pos[1] %= SCREEN_SIZE[1]
+        if not paused:
+            for sprite in all_sprites:
+                sprite.pos[0] %= SCREEN_SIZE[0]
+                sprite.pos[1] %= SCREEN_SIZE[1]
 
-        collide_list = pygame.sprite.groupcollide(asteroids, bullets, True, True, pygame.sprite.collide_mask)
-        for asteroid in collide_list:
-            score += 10
-            for i in asteroid.split():
-                asteroids.add(i)
-                all_sprites.add(i)
+            collide_list = pygame.sprite.groupcollide(asteroids, bullets, True, True, pygame.sprite.collide_mask)
+            for asteroid in collide_list:
+                score += 10
+                for i in asteroid.split():
+                    asteroids.add(i)
+                    all_sprites.add(i)
 
-        if pygame.sprite.spritecollide(player, asteroids, True, pygame.sprite.collide_mask):
-            player.kill()
-            exit = True
+            if pygame.sprite.spritecollide(player, asteroids, True, pygame.sprite.collide_mask):
+                player.kill()
+                exit = True
 
-        all_sprites.update()
+            all_sprites.update()
 
-        screen.fill(background)
-        all_sprites.draw(screen)
+            screen.fill(background)
+            all_sprites.draw(screen)
 
-        pygame.display.update()
+            pygame.display.update()
 
         clock.tick(FRAMERATE)
 
