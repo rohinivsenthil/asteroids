@@ -22,83 +22,86 @@ def main():
 
     background = pygame.Color(0, 0, 0)
 
-    all_sprites = pygame.sprite.Group()
-    asteroids = pygame.sprite.Group()
-    bullets = pygame.sprite.Group()
-
-    player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
-    all_sprites.add(player)
-
-    if random.uniform(0, sum(SCREEN_SIZE)) < SCREEN_SIZE[0]:
-        t = random.randint(0, 2 * SCREEN_SIZE[0])
-        pos = (t % SCREEN_SIZE[0], SCREEN_SIZE[1] if t > SCREEN_SIZE[0] else 0)
-    else:
-        t = random.randint(0, 2 * SCREEN_SIZE[1])
-        pos = (t % SCREEN_SIZE[1], SCREEN_SIZE[0] if t > SCREEN_SIZE[1] else 0)
-
-    speed = (random.uniform(1, 2), random.uniform(1, 2))
-    asteroid = Asteroid(50, speed, pos)
-    all_sprites.add(asteroid)
-    asteroids.add(asteroid)
-
-    score = 0
-
     clock = pygame.time.Clock()
 
     exit = False
-    paused = False
 
     while not exit:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                exit = True
+        all_sprites = pygame.sprite.Group()
+        asteroids = pygame.sprite.Group()
+        bullets = pygame.sprite.Group()
 
-            if (not paused) and (event.type == KEYDOWN) and (event.key == K_SPACE):
-                bullet = player.shoot()
-                all_sprites.add(bullet)
-                bullets.add(bullet)
+        player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
+        all_sprites.add(player)
 
-        keys = pygame.key.get_pressed()
+        if random.uniform(0, sum(SCREEN_SIZE)) < SCREEN_SIZE[0]:
+            t = random.randint(0, 2 * SCREEN_SIZE[0])
+            pos = (t % SCREEN_SIZE[0], SCREEN_SIZE[1] if t > SCREEN_SIZE[0] else 0)
+        else:
+            t = random.randint(0, 2 * SCREEN_SIZE[1])
+            pos = (t % SCREEN_SIZE[1], SCREEN_SIZE[0] if t > SCREEN_SIZE[1] else 0)
 
-        if keys[K_q]:
-            exit = True
-        if keys[K_p]:
-            paused ^= True
+        speed = (random.uniform(1, 2), random.uniform(1, 2))
+        asteroid = Asteroid(50, speed, pos)
+        all_sprites.add(asteroid)
+        asteroids.add(asteroid)
 
-        if keys[K_LEFT]:
-            player.rotate(-2)
-        if keys[K_RIGHT]:
-            player.rotate(2)
+        score = 0
+        dead = False
+        paused = False
 
-        if keys[K_UP]:
-            player.accelerate()
+        while not dead:
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    exit = True
+                    dead = True
 
-        if not paused:
-            for sprite in all_sprites:
-                sprite.pos[0] %= SCREEN_SIZE[0]
-                sprite.pos[1] %= SCREEN_SIZE[1]
+                if (not paused) and (event.type == KEYDOWN) and (event.key == K_SPACE):
+                    bullet = player.shoot()
+                    all_sprites.add(bullet)
+                    bullets.add(bullet)
 
-            collide_list = pygame.sprite.groupcollide(asteroids, bullets, True, True, pygame.sprite.collide_mask)
-            for asteroid in collide_list:
-                score += 10
-                for i in asteroid.split():
-                    asteroids.add(i)
-                    all_sprites.add(i)
+            keys = pygame.key.get_pressed()
 
-            if pygame.sprite.spritecollide(player, asteroids, True, pygame.sprite.collide_mask):
-                player.kill()
-                exit = True
+            if keys[K_q]:
+                dead = True
+            if keys[K_p]:
+                paused ^= True
 
-            all_sprites.update()
+            if keys[K_LEFT]:
+                player.rotate(-2)
+            if keys[K_RIGHT]:
+                player.rotate(2)
 
-            screen.fill(background)
-            all_sprites.draw(screen)
+            if keys[K_UP]:
+                player.accelerate()
 
-            pygame.display.update()
+            if not paused:
+                for sprite in all_sprites:
+                    sprite.pos[0] %= SCREEN_SIZE[0]
+                    sprite.pos[1] %= SCREEN_SIZE[1]
 
-        clock.tick(FRAMERATE)
+                collide_list = pygame.sprite.groupcollide(asteroids, bullets, True, True, pygame.sprite.collide_mask)
+                for asteroid in collide_list:
+                    score += 10
+                    for i in asteroid.split():
+                        asteroids.add(i)
+                        all_sprites.add(i)
 
-    print(score)
+                if pygame.sprite.spritecollide(player, asteroids, True, pygame.sprite.collide_mask):
+                    player.kill()
+                    dead = True
+
+                all_sprites.update()
+
+                screen.fill(background)
+                all_sprites.draw(screen)
+
+                pygame.display.update()
+
+            clock.tick(FRAMERATE)
+
+        print(score)
 
     pygame.quit()
 
