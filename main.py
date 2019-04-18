@@ -59,6 +59,9 @@ def main():
 
         keys = pygame.key.get_pressed()
 
+        if keys[K_q]:
+            exit = True
+
         if keys[K_LEFT]:
             player.rotate(-2)
         if keys[K_RIGHT]:
