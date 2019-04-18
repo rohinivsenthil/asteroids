@@ -41,6 +41,8 @@ def main():
     all_sprites.add(asteroid)
     asteroids.add(asteroid)
 
+    score = 0
+
     clock = pygame.time.Clock()
 
     exit = False
@@ -71,6 +73,7 @@ def main():
 
         collide_list = pygame.sprite.groupcollide(asteroids, bullets, True, True, pygame.sprite.collide_mask)
         for asteroid in collide_list:
+            score += 10
             for i in asteroid.split():
                 asteroids.add(i)
                 all_sprites.add(i)
@@ -87,6 +90,8 @@ def main():
         pygame.display.update()
 
         clock.tick(FRAMERATE)
+
+    print(score)
 
     pygame.quit()
 
