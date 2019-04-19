@@ -14,14 +14,46 @@ SCREEN_SIZE = config['screenSize']
 FRAMERATE = config['framerate']
 
 
+def get_actions():
+    actions = {
+        'accelerate': False,
+        'die': False,
+        'left': False,
+        'pause': False,
+        'quit': False,
+        'right': False,
+        'fire': False
+    }
+
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            actions['quit'] = True
+
+        if event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                actions['fire'] = True
+            if event.key == K_p:
+                actions['pause'] = True
+
+    keys = pygame.key.get_pressed()
+
+    if keys[K_q]:
+        actions['die'] = True
+    if keys[K_UP]:
+        actions['accelerate'] = True
+    if keys[K_LEFT]:
+        actions['left'] = True
+    if keys[K_RIGHT]:
+        actions['right'] = True
+
+    return actions
+
+
 def main():
     pygame.init()
     pygame.display.set_caption("Asteroids")
-
     screen = pygame.display.set_mode(SCREEN_SIZE)
-
     background = pygame.Color(0, 0, 0)
-
     clock = pygame.time.Clock()
 
     exit = False
@@ -31,8 +63,6 @@ def main():
         asteroids = pygame.sprite.Group()
         bullets = pygame.sprite.Group()
 
-        player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
-        all_sprites.add(player)
 
         if random.uniform(0, sum(SCREEN_SIZE)) < SCREEN_SIZE[0]:
             t = random.randint(0, 2 * SCREEN_SIZE[0])
@@ -46,37 +76,39 @@ def main():
         all_sprites.add(asteroid)
         asteroids.add(asteroid)
 
+        player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
+        all_sprites.add(player)
+
         score = 0
-        dead = False
+
         paused = False
+        dead = False
 
         while not dead:
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    exit = True
-                    dead = True
+            actions = get_actions()
 
-                if (not paused) and (event.type == KEYDOWN) and (event.key == K_SPACE):
-                    bullet = player.shoot()
-                    all_sprites.add(bullet)
-                    bullets.add(bullet)
-
-            keys = pygame.key.get_pressed()
-
-            if keys[K_q]:
+            if actions['quit']:
+                exit = True
+                break
+            if actions['die']:
                 dead = True
-            if keys[K_p]:
-                paused ^= True
 
-            if keys[K_LEFT]:
-                player.rotate(-2)
-            if keys[K_RIGHT]:
-                player.rotate(2)
-
-            if keys[K_UP]:
-                player.accelerate()
+            paused ^= actions['pause']
 
             if not paused:
+                if actions['fire']:
+                    bullet = player.shoot()
+                    bullets.add(bullet)
+                    all_sprites.add(bullet)
+
+                if actions['left']:
+                    player.rotate(-2)
+                if actions['right']:
+                    player.rotate(2)
+
+                if actions['accelerate']:
+                    player.accelerate()
+
                 for sprite in all_sprites:
                     sprite.pos[0] %= SCREEN_SIZE[0]
                     sprite.pos[1] %= SCREEN_SIZE[1]
@@ -93,15 +125,11 @@ def main():
                     dead = True
 
                 all_sprites.update()
-
                 screen.fill(background)
                 all_sprites.draw(screen)
-
                 pygame.display.update()
 
             clock.tick(FRAMERATE)
-
-        print(score)
 
     pygame.quit()
 
