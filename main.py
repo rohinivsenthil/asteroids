@@ -49,6 +49,20 @@ def get_actions():
     return actions
 
 
+def generate_asteroid(size):
+    if random.uniform(0, sum(SCREEN_SIZE)) < SCREEN_SIZE[0]:
+        t = random.randint(0, 2 * SCREEN_SIZE[0])
+        pos = (t % SCREEN_SIZE[0], SCREEN_SIZE[1] if t > SCREEN_SIZE[0] else 0)
+    else:
+        t = random.randint(0, 2 * SCREEN_SIZE[1])
+        pos = (t % SCREEN_SIZE[1], SCREEN_SIZE[0] if t > SCREEN_SIZE[1] else 0)
+
+    speed = (random.uniform(1, 2), random.uniform(1, 2))
+    asteroid = Asteroid(size, speed, pos)
+
+    return asteroid
+
+
 def main():
     pygame.init()
     pygame.display.set_caption("Asteroids")
@@ -63,18 +77,10 @@ def main():
         asteroids = pygame.sprite.Group()
         bullets = pygame.sprite.Group()
 
-
-        if random.uniform(0, sum(SCREEN_SIZE)) < SCREEN_SIZE[0]:
-            t = random.randint(0, 2 * SCREEN_SIZE[0])
-            pos = (t % SCREEN_SIZE[0], SCREEN_SIZE[1] if t > SCREEN_SIZE[0] else 0)
-        else:
-            t = random.randint(0, 2 * SCREEN_SIZE[1])
-            pos = (t % SCREEN_SIZE[1], SCREEN_SIZE[0] if t > SCREEN_SIZE[1] else 0)
-
-        speed = (random.uniform(1, 2), random.uniform(1, 2))
-        asteroid = Asteroid(50, speed, pos)
-        all_sprites.add(asteroid)
+        last_asteroid = 0
+        asteroid = generate_asteroid(random.randint(config['asteroid']['minRadius'], config['asteroid']['maxRadius']))
         asteroids.add(asteroid)
+        all_sprites.add(asteroid)
 
         player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
         all_sprites.add(player)
@@ -109,6 +115,13 @@ def main():
                 if actions['accelerate']:
                     player.accelerate()
 
+                if last_asteroid > 5000:
+                    last_asteroid = 0
+                    asteroid = generate_asteroid(random.randint(config['asteroid']['minRadius'], config['asteroid']['maxRadius']))
+                    asteroids.add(asteroid)
+                    all_sprites.add(asteroid)
+
+
                 for sprite in all_sprites:
                     sprite.pos[0] %= SCREEN_SIZE[0]
                     sprite.pos[1] %= SCREEN_SIZE[1]
@@ -128,6 +141,8 @@ def main():
                 screen.fill(background)
                 all_sprites.draw(screen)
                 pygame.display.update()
+
+                last_asteroid += clock.get_time()
 
             clock.tick(FRAMERATE)
 
