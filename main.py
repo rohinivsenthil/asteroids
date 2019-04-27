@@ -55,7 +55,7 @@ def generate_asteroid(size):
         pos = (t % SCREEN_SIZE[0], SCREEN_SIZE[1] if t > SCREEN_SIZE[0] else 0)
     else:
         t = random.randint(0, 2 * SCREEN_SIZE[1])
-        pos = (t % SCREEN_SIZE[1], SCREEN_SIZE[0] if t > SCREEN_SIZE[1] else 0)
+        pos = (SCREEN_SIZE[0] if t > SCREEN_SIZE[1] else 0, t % SCREEN_SIZE[1])
 
     speed = (random.uniform(1, 2), random.uniform(1, 2))
     asteroid = Asteroid(size, speed, pos)
