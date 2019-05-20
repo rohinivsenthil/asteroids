@@ -12,6 +12,7 @@
 	},
 	"spaceship": {
 		"image": "images/spaceship.png",
+		"shootSound": "sounds/shoot.wav",
 		"acceleration": 0.15,
 		"maxSpeed": 15
 	}

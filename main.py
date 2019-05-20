@@ -64,6 +64,7 @@ def generate_asteroid(size):
 
 
 def main():
+    pygame.mixer.pre_init(buffer=1024)
     pygame.init()
     pygame.display.set_caption("Asteroids")
     screen = pygame.display.set_mode(SCREEN_SIZE)

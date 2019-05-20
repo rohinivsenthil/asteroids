@@ -11,6 +11,7 @@ with open('config.json') as configfile:
 
 
 IMAGE_FILENAME = config['image']
+SHOOT_SOUND_FILENAME = config['shootSound']
 ACCELERATION = config['acceleration']
 MAX_SPEED = config['maxSpeed']
 
@@ -45,6 +46,7 @@ class Spaceship(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
     def shoot(self):
+        pygame.mixer.Sound(SHOOT_SOUND_FILENAME).play()
         return Bullet(self.angle, self.pos)
 
     def update(self):
