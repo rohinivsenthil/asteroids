@@ -6,6 +6,7 @@
 		"maxRadius": 60
 	},
 	"bullet": {
+		"image": "images/bullet.png",
 		"speed": 17,
 		"maxDist": 480
 	},

@@ -7,11 +7,11 @@ from pygame.locals import *
 with open('config.json') as configfile:
     config = json.load(configfile)['bullet']
 
+IMAGE_FILENAME = config['image']
 SPEED = config['speed']
 MAX_DIST = config['maxDist']
 
-bullet_surface = pygame.Surface((5, 5), SRCALPHA, 32)
-pygame.draw.circle(bullet_surface, pygame.Color(0, 0, 255), (2, 2), 2)
+bullet_surface = pygame.image.load(IMAGE_FILENAME)
 
 
 class Bullet(pygame.sprite.Sprite):
