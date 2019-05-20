@@ -10,6 +10,7 @@
 		"maxDist": 480
 	},
 	"spaceship": {
+		"image": "images/spaceship.png",
 		"acceleration": 0.15,
 		"maxSpeed": 15
 	}
