@@ -11,7 +11,7 @@ with open('config.json') as configfile:
 
 SCREEN_SIZE = config['screenSize']
 FRAMERATE = config['framerate']
-
+SHIP_EXPLOSION = config['ship_explode']
 
 def get_actions():
     actions = {
@@ -134,6 +134,7 @@ def main():
                         all_sprites.add(i)
 
                 if pygame.sprite.spritecollide(player, asteroids, True, pygame.sprite.collide_mask):
+                    pygame.mixer.Sound(SHIP_EXPLOSION).play()
                     player.kill()
                     dead = True
 
