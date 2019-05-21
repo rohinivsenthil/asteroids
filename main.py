@@ -4,8 +4,8 @@ import random
 import pygame
 from pygame.locals import *
 
-from asteroid import Asteroid
-from spaceship import Spaceship
+from sprites import Asteroid
+from sprites import Spaceship
 
 with open('config.json') as configfile:
     config = json.load(configfile)

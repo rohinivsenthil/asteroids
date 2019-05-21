@@ -4,7 +4,7 @@ import json
 import pygame
 from pygame.locals import *
 
-from bullet import Bullet
+from . import Bullet
 
 with open('config.json') as configfile:
     config = json.load(configfile)['spaceship']
