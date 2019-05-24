@@ -1,6 +1,7 @@
 {
 	"framerate": 60,
 	"screenSize": [960, 720],
+	"ship_explode": "sounds/explosion.wav",
 	"asteroid": {
 		"minRadius": 20,
 		"maxRadius": 60
