@@ -1,7 +1,6 @@
 {
 	"framerate": 60,
 	"screenSize": [960, 720],
-	"ship_explode": "sounds/explosion.wav",
 	"asteroid": {
 		"minRadius": 20,
 		"maxRadius": 60
@@ -13,8 +12,12 @@
 	},
 	"spaceship": {
 		"image": "images/spaceship.png",
-		"shootSound": "sounds/shoot.wav",
 		"acceleration": 0.15,
 		"maxSpeed": 15
+	},
+	"game": {
+		"shootSound": "sounds/shoot.wav",
+		"shipExplodeSound": "sounds/explosion.wav",
+		"background": [0, 0, 0]
 	}
 }
