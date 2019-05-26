@@ -10,9 +10,10 @@ with open('config.json') as configfile:
     config = json.load(configfile)['spaceship']
 
 
-IMAGE_FILENAME = config['image']
+IMAGE_FILENAME = config['ship']
 ACCELERATION = config['acceleration']
 MAX_SPEED = config['maxSpeed']
+IMAGE_BLAST = config['blast']
 
 spaceship_surface = pygame.image.load(IMAGE_FILENAME)
 
@@ -54,4 +55,12 @@ class Spaceship(pygame.sprite.Sprite):
         self.pos[0] += self.speed[0]
         self.pos[1] += self.speed[1]
 
+        self.rect.center = self.pos
+    def die(self):
+        self.image = pygame.image.load(IMAGE_BLAST)
+
+        center = self.rect.center
+        self.rect = self.image.get_rect(center=center)
+
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.center = self.pos

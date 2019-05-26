@@ -11,13 +11,14 @@
 		"maxDist": 480
 	},
 	"spaceship": {
-		"image": "images/spaceship.png",
+		"ship": "images/spaceship.png",
+		"blast": "images/shipExplosion.png",
 		"acceleration": 0.15,
 		"maxSpeed": 15
 	},
 	"game": {
 		"shootSound": "sounds/shoot.wav",
-		"shipExplodeSound": "sounds/explosion.wav",
+		"shipExplodeSound": "sounds/shipExplosion.wav",
 		"background": [0, 0, 0]
 	}
 }
