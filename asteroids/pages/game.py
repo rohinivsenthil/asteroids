@@ -20,6 +20,8 @@ GREEN = (0,255,0)
 def get_actions():
     actions = {
         'accelerate': False,
+        'recelerate': False,
+        'stop': False,
         'die': False,
         'left': False,
         'pause': False,
@@ -37,13 +39,22 @@ def get_actions():
                 actions['fire'] = True
             if event.key == K_p:
                 actions['pause'] = True
+            if event.key == K_UP:
+                actions['accelerate'] = True
+            if event.key == K_DOWN:
+                actions['recelerate'] = True
+        if event.type == KEYUP:
+            if event.key == K_UP or event.key == K_DOWN:
+                actions['accelerate'] = False
+                actions['recelerate'] = True
+                actions['stop'] = True
 
     keys = pygame.key.get_pressed()
 
     if keys[K_q]:
         actions['die'] = True
-    if keys[K_UP]:
-        actions['accelerate'] = True
+    # if keys[K_UP]:
+    #     actions['accelerate'] = True
     if keys[K_LEFT]:
         actions['left'] = True
     if keys[K_RIGHT]:
@@ -116,6 +127,12 @@ def game(screen):
 
             if actions['accelerate']:
                 player.accelerate()
+
+            if actions['recelerate']:
+                player.recelerate()
+
+            if actions['stop']:
+                player.stop()
 
             if last_asteroid > 5000:
                 last_asteroid = 0
