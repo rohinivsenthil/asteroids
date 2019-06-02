@@ -15,6 +15,7 @@ SHIP_EXPLOSION_SOUND_FILENAME = config['game']['shipExplodeSound']
 SHOOT_SOUND_FILENAME = config['game']['shootSound']
 BACKGROUND = pygame.Color(*config['game']['background'])
 
+GREEN = (0,255,0)
 
 def get_actions():
     actions = {
@@ -80,6 +81,7 @@ def game(screen):
     player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
     all_sprites.add(player)
 
+    score_text = pygame.font.SysFont("Monotype Corsiva",20)
     score = 0
     time_played = 0
 
@@ -88,6 +90,8 @@ def game(screen):
     exit = False
 
     while not dead:
+        
+
         actions = get_actions()
 
         if actions['quit']:
@@ -134,10 +138,12 @@ def game(screen):
             if pygame.sprite.spritecollide(player, asteroids, True, pygame.sprite.collide_mask):
                 pygame.mixer.Sound(SHIP_EXPLOSION_SOUND_FILENAME).play()
                 player.die()
+
                 all_sprites.add(player)
                 screen.fill(BACKGROUND)
                 all_sprites.draw(screen)
                 pygame.display.update()
+                
                 clock.tick(2)
                 player.kill()
                 dead = True
@@ -145,6 +151,10 @@ def game(screen):
             all_sprites.update()
             screen.fill(BACKGROUND)
             all_sprites.draw(screen)
+
+            score_display = score_text.render("Score: %i" %score,True, GREEN)
+            screen.blit(score_display,(SCREEN_SIZE[0]//2 -score_display.get_width()//2, 15 ))
+            
             pygame.display.update()
 
             last_asteroid += clock.get_time()
