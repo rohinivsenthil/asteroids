@@ -1,5 +1,5 @@
-import math
 import json
+import math
 
 import pygame
 from pygame.locals import *
@@ -8,7 +8,6 @@ from . import Bullet
 
 with open('config.json') as configfile:
     config = json.load(configfile)['spaceship']
-
 
 IMAGE_FILENAME = config['ship']
 ACCELERATION = config['acceleration']
@@ -56,6 +55,7 @@ class Spaceship(pygame.sprite.Sprite):
         self.pos[1] += self.speed[1]
 
         self.rect.center = self.pos
+
     def die(self):
         self.image = pygame.image.load(IMAGE_BLAST)
 

@@ -1,10 +1,9 @@
-import random
-import math
 import json
+import math
+import random
 
 import pygame
 from pygame.locals import *
-
 
 with open('config.json') as configfile:
     config = json.load(configfile)['asteroid']
@@ -23,7 +22,8 @@ def linspace(start, stop, num_steps):
 def generate_polygon(center, mu, sigma, maxr, num_points):
     points = []
 
-    for theta in linspace(0, 2 * math.pi - (2 * math.pi / num_points), num_points):
+    for theta in linspace(0, 2 * math.pi - (2 * math.pi / num_points),
+                          num_points):
         radius = min(random.gauss(mu, sigma), maxr)
         x = center[0] + radius * math.cos(theta)
         y = center[1] + radius * math.sin(theta)
@@ -36,8 +36,9 @@ class Asteroid(pygame.sprite.Sprite):
     def __init__(self, radius, speed, pos):
         super().__init__()
 
-        points = generate_polygon((radius, radius), radius - (radius / 5), (radius / 10), radius, random.randint(
-            10, 20))
+        points = generate_polygon((radius, radius),
+                                  radius - (radius / 5), (radius / 10), radius,
+                                  random.randint(10, 20))
 
         self.image = pygame.Surface((radius * 2, radius * 2), SRCALPHA, 32)
 

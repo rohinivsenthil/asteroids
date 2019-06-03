@@ -15,7 +15,8 @@ SHIP_EXPLOSION_SOUND_FILENAME = config['game']['shipExplodeSound']
 SHOOT_SOUND_FILENAME = config['game']['shootSound']
 BACKGROUND = pygame.Color(*config['game']['background'])
 
-GREEN = (0,255,0)
+GREEN = (0, 255, 0)
+
 
 def get_actions():
     actions = {
@@ -74,14 +75,16 @@ def game(screen):
     bullets = pygame.sprite.Group()
 
     last_asteroid = 0
-    asteroid = generate_asteroid(random.randint(config['asteroid']['minRadius'], config['asteroid']['maxRadius']))
+    asteroid = generate_asteroid(
+        random.randint(config['asteroid']['minRadius'],
+                       config['asteroid']['maxRadius']))
     asteroids.add(asteroid)
     all_sprites.add(asteroid)
 
     player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
     all_sprites.add(player)
 
-    score_text = pygame.font.SysFont("Monotype Corsiva",20)
+    score_text = pygame.font.SysFont("Monotype Corsiva", 20)
     score = 0
     time_played = 0
 
@@ -90,7 +93,6 @@ def game(screen):
     exit = False
 
     while not dead:
-        
 
         actions = get_actions()
 
@@ -119,23 +121,26 @@ def game(screen):
 
             if last_asteroid > 5000:
                 last_asteroid = 0
-                asteroid = generate_asteroid(random.randint(config['asteroid']['minRadius'], config['asteroid']['maxRadius']))
+                asteroid = generate_asteroid(
+                    random.randint(config['asteroid']['minRadius'],
+                                   config['asteroid']['maxRadius']))
                 asteroids.add(asteroid)
                 all_sprites.add(asteroid)
-
 
             for sprite in all_sprites:
                 sprite.pos[0] %= SCREEN_SIZE[0]
                 sprite.pos[1] %= SCREEN_SIZE[1]
 
-            collide_list = pygame.sprite.groupcollide(asteroids, bullets, True, True, pygame.sprite.collide_mask)
+            collide_list = pygame.sprite.groupcollide(
+                asteroids, bullets, True, True, pygame.sprite.collide_mask)
             for asteroid in collide_list:
                 score += 10
                 for i in asteroid.split():
                     asteroids.add(i)
                     all_sprites.add(i)
 
-            if pygame.sprite.spritecollide(player, asteroids, True, pygame.sprite.collide_mask):
+            if pygame.sprite.spritecollide(player, asteroids, True,
+                                           pygame.sprite.collide_mask):
                 pygame.mixer.Sound(SHIP_EXPLOSION_SOUND_FILENAME).play()
                 player.die()
 
@@ -143,18 +148,20 @@ def game(screen):
                 screen.fill(BACKGROUND)
                 all_sprites.draw(screen)
                 pygame.display.update()
-                
+
                 clock.tick(2)
                 player.kill()
                 dead = True
-                
+
             all_sprites.update()
             screen.fill(BACKGROUND)
             all_sprites.draw(screen)
 
-            score_display = score_text.render("Score: %i" %score,True, GREEN)
-            screen.blit(score_display,(SCREEN_SIZE[0]//2 -score_display.get_width()//2, 15 ))
-            
+            score_display = score_text.render("Score: %i" % score, True, GREEN)
+            screen.blit(
+                score_display,
+                (SCREEN_SIZE[0] // 2 - score_display.get_width() // 2, 15))
+
             pygame.display.update()
 
             last_asteroid += clock.get_time()
