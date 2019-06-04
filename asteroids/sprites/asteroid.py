@@ -5,6 +5,8 @@ import random
 import pygame
 from pygame.locals import *
 
+from .powerup import Powerup
+
 with open('config.json') as configfile:
     config = json.load(configfile)['asteroid']
 
@@ -55,7 +57,7 @@ class Asteroid(pygame.sprite.Sprite):
 
     def split(self):
         if self.radius // 2 < MIN_RADIUS:
-            return []
+            return [Powerup(self.pos)]
 
         r = random.random() * 2 * math.pi
         speed = [self.speed[0] + self.speed[1], self.speed[1] - self.speed[0]]

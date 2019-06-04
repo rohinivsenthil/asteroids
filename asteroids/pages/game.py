@@ -4,7 +4,7 @@ import random
 import pygame
 from pygame.locals import *
 
-from ..sprites import Asteroid, Spaceship
+from ..sprites import Asteroid, Spaceship, Powerup
 
 with open('config.json') as configfile:
     config = json.load(configfile)
@@ -72,6 +72,7 @@ def game(screen):
 
     all_sprites = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    powerups = pygame.sprite.Group()
     bullets = pygame.sprite.Group()
 
     last_asteroid = 0
@@ -93,7 +94,6 @@ def game(screen):
     exit = False
 
     while not dead:
-
         actions = get_actions()
 
         if actions['quit']:
@@ -136,8 +136,20 @@ def game(screen):
             for asteroid in collide_list:
                 score += 10
                 for i in asteroid.split():
-                    asteroids.add(i)
+                    if isinstance(i, Powerup):
+                        powerups.add(i)
+                    else:
+                        asteroids.add(i)
                     all_sprites.add(i)
+
+            collide_list = pygame.sprite.spritecollide(
+                player, powerups, True, pygame.sprite.collide_mask)
+            for powerup in collide_list:
+                if powerup.name == 'bomb':
+                    sprites = asteroids.sprites()
+                    score += 10 * len(sprites)
+                    all_sprites.remove(*sprites)
+                    asteroids.empty()
 
             if pygame.sprite.spritecollide(player, asteroids, True,
                                            pygame.sprite.collide_mask):
@@ -166,6 +178,9 @@ def game(screen):
 
             last_asteroid += clock.get_time()
             time_played += clock.get_time()
+
+            for powerup in powerups:
+                powerup.time += clock.get_time()
 
         clock.tick(FRAMERATE)
 
