@@ -20,5 +20,15 @@
 		"shootSound": "sounds/shoot.wav",
 		"shipExplodeSound": "sounds/shipExplosion.wav",
 		"background": [0, 0, 0]
+	},
+	"powerup": {
+		"speed": 4,
+		"time": 10000,
+		"powerups": {
+			"bomb": {
+				"image": "images/bomb.png",
+				"generation": 0.5
+			}
+		}
 	}
 }

@@ -1,5 +1,5 @@
-import math
 import json
+import math
 
 import pygame
 from pygame.locals import *
@@ -25,7 +25,10 @@ class Bullet(pygame.sprite.Sprite):
         self.pos = list(pos)
         self.dist = 0
 
-        self.speed = [math.sin(math.radians(angle)) * SPEED, -math.cos(math.radians(angle)) * SPEED]
+        self.speed = [
+            math.sin(math.radians(angle)) * SPEED,
+            -math.cos(math.radians(angle)) * SPEED
+        ]
 
     def update(self):
         self.pos[0] += self.speed[0]
