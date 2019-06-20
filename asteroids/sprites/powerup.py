@@ -25,15 +25,14 @@ class Powerup(pygame.sprite.Sprite):
         self.name = ''
         self.image = pygame.Surface((0, 0))
         self.rect = self.image.get_rect(center=(0, 0))
-
-        for (name, value) in POWERUPS.items():
-            s += value['generation']
-            if s < r:
-                self.name = name
-                self.image = pygame.image.load(value['image'])
-                self.rect = self.image.get_rect(center=pos)
-                self.mask = pygame.mask.from_surface(self.image)
-                break
+        name=random.choice(list(POWERUPS.keys()))
+        value=POWERUPS[name]
+        s = value['generation']
+        if s < r:
+            self.name = name
+            self.image = pygame.image.load(value['image'])
+            self.rect = self.image.get_rect(center=pos)
+            self.mask = pygame.mask.from_surface(self.image)
         if s > r:
             self.kill()
 

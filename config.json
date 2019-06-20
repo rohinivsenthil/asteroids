@@ -28,6 +28,10 @@
 			"bomb": {
 				"image": "images/bomb.png",
 				"generation": 0.5
+			},
+			"shield": {
+				"image": "images/shield.png",
+				"generation": 0.5
 			}
 		}
 	}

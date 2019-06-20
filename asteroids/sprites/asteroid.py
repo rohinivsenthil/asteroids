@@ -44,8 +44,8 @@ class Asteroid(pygame.sprite.Sprite):
 
         self.image = pygame.Surface((radius * 2, radius * 2), SRCALPHA, 32)
 
-        pygame.draw.polygon(self.image, pygame.Color(0, 0, 0), points)
-        pygame.draw.polygon(self.image, pygame.Color(0, 0, 255), points, 2)
+        pygame.draw.polygon(self.image, pygame.Color(102, 86, 56), points)
+        pygame.draw.polygon(self.image, pygame.Color(0, 0, 0), points, 2)
 
         self.rect = self.image.get_rect(center=pos)
         self.mask = pygame.mask.from_surface(self.image)
