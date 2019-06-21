@@ -18,7 +18,7 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, angle, pos):
         super().__init__()
 
-        self.image = bullet_surface
+        self.image = pygame.transform.rotate(bullet_surface, -angle)
         self.rect = self.image.get_rect(center=pos)
         self.mask = pygame.mask.from_surface(self.image)
 
