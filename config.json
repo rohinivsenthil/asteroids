@@ -2,6 +2,7 @@
 	"framerate": 60,
 	"screenSize": [960, 720],
 	"asteroid": {
+		"color": [102, 86, 56],
 		"minRadius": 20,
 		"maxRadius": 60
 	},

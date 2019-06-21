@@ -11,6 +11,7 @@ with open('config.json') as configfile:
     config = json.load(configfile)['asteroid']
 
 MIN_RADIUS = config['minRadius']
+COLOR = pygame.Color(*config['color'])
 
 
 def linspace(start, stop, num_steps):
@@ -44,8 +45,8 @@ class Asteroid(pygame.sprite.Sprite):
 
         self.image = pygame.Surface((radius * 2, radius * 2), SRCALPHA, 32)
 
-        pygame.draw.polygon(self.image, pygame.Color(0, 0, 0), points)
-        pygame.draw.polygon(self.image, pygame.Color(0, 0, 255), points, 2)
+        pygame.draw.polygon(self.image, COLOR, points)
+        pygame.draw.polygon(self.image, COLOR, points, 2)
 
         self.rect = self.image.get_rect(center=pos)
         self.mask = pygame.mask.from_surface(self.image)
