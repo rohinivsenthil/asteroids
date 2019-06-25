@@ -21,6 +21,8 @@ GREEN = (0, 255, 0)
 def get_actions():
     actions = {
         'accelerate': False,
+        'recelerate': False,
+        'stop': False,
         'die': False,
         'left': False,
         'pause': False,
@@ -38,13 +40,22 @@ def get_actions():
                 actions['fire'] = True
             if event.key == K_p:
                 actions['pause'] = True
+            if event.key == K_UP:
+                actions['accelerate'] = True
+            if event.key == K_DOWN:
+                actions['recelerate'] = True
+        if event.type == KEYUP:
+            if event.key == K_UP or event.key == K_DOWN:
+                actions['accelerate'] = False
+                actions['recelerate'] = False
+                actions['stop'] = True
 
     keys = pygame.key.get_pressed()
 
     if keys[K_q]:
         actions['die'] = True
-    if keys[K_UP]:
-        actions['accelerate'] = True
+    # if keys[K_UP]:
+    #     actions['accelerate'] = True
     if keys[K_LEFT]:
         actions['left'] = True
     if keys[K_RIGHT]:
@@ -84,6 +95,7 @@ def game(screen):
 
     player = Spaceship((SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2))
     all_sprites.add(player)
+    extra=False
 
     score_text = pygame.font.SysFont("Monotype Corsiva", 20)
     score = 0
@@ -119,6 +131,12 @@ def game(screen):
             if actions['accelerate']:
                 player.accelerate()
 
+            if actions['recelerate']:
+                player.recelerate()
+
+            if actions['stop']:
+                player.stop()
+
             if last_asteroid > 5000:
                 last_asteroid = 0
                 asteroid = generate_asteroid(
@@ -150,20 +168,28 @@ def game(screen):
                     score += 10 * len(sprites)
                     all_sprites.remove(*sprites)
                     asteroids.empty()
+                if powerup.name == 'shield':
+                    extra = True
+                    powerups.remove(powerup)
 
-            if pygame.sprite.spritecollide(player, asteroids, True,
-                                           pygame.sprite.collide_mask):
-                pygame.mixer.Sound(SHIP_EXPLOSION_SOUND_FILENAME).play()
-                player.die()
+            collide_list=pygame.sprite.spritecollide(player, asteroids, True,
+                                           pygame.sprite.collide_mask)
+            for asteroid in collide_list:
+                if extra == False:
+                    pygame.mixer.Sound(SHIP_EXPLOSION_SOUND_FILENAME).play()
+                    player.die()
 
-                all_sprites.add(player)
-                screen.fill(BACKGROUND)
-                all_sprites.draw(screen)
-                pygame.display.update()
+                    all_sprites.add(player)
+                    screen.fill(BACKGROUND)
+                    all_sprites.draw(screen)
+                    pygame.display.update()
 
-                clock.tick(2)
-                player.kill()
-                dead = True
+                    clock.tick(2)
+                    player.kill()
+                    dead = True
+                else:
+                    extra= False
+                    asteroids.remove(asteroid)
 
             all_sprites.update()
             screen.fill(BACKGROUND)
@@ -173,6 +199,10 @@ def game(screen):
             screen.blit(
                 score_display,
                 (SCREEN_SIZE[0] // 2 - score_display.get_width() // 2, 15))
+            
+            if extra == True:
+                shield_display = score_text.render("Shield On!!!", True, GREEN)
+                screen.blit(shield_display,(0, 15))
 
             pygame.display.update()
 
