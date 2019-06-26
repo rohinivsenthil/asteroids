@@ -28,11 +28,11 @@
 		"powerups": {
 			"bomb": {
 				"image": "images/bomb.png",
-				"generation": 0.5
+				"generation": 0.05
 			},
 			"shield": {
 				"image": "images/shield.png",
-				"generation": 0.5
+				"generation": 0.05
 			}
 		}
 	}
