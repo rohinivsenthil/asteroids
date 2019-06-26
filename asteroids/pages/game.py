@@ -4,7 +4,8 @@ import random
 import pygame
 from pygame.locals import *
 
-from ..sprites import Asteroid, Powerup, Spaceship
+from ..sprites import Asteroid, Spaceship
+from .common import get_actions, collide_asteroids_bullets, do_actions
 
 with open("config.json") as configfile:
     config = json.load(configfile)
@@ -16,52 +17,6 @@ SHOOT_SOUND_FILENAME = config["game"]["shootSound"]
 BACKGROUND = pygame.Color(*config["game"]["background"])
 
 GREEN = (0, 255, 0)
-
-
-def get_actions():
-    actions = {
-        "accelerate": False,
-        "recelerate": False,
-        "stop": False,
-        "die": False,
-        "left": False,
-        "pause": False,
-        "quit": False,
-        "right": False,
-        "fire": False,
-    }
-
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            actions["quit"] = True
-
-        if event.type == KEYDOWN:
-            if event.key == K_SPACE:
-                actions["fire"] = True
-            if event.key == K_p:
-                actions["pause"] = True
-            if event.key == K_UP:
-                actions["accelerate"] = True
-            if event.key == K_DOWN:
-                actions["recelerate"] = True
-        if event.type == KEYUP:
-            if event.key == K_UP or event.key == K_DOWN:
-                actions["accelerate"] = False
-                actions["recelerate"] = False
-                actions["stop"] = True
-
-    keys = pygame.key.get_pressed()
-
-    if keys[K_q]:
-        actions["die"] = True
-    # if keys[K_UP]:
-    #     actions['accelerate'] = True
-    if keys[K_LEFT]:
-        actions["left"] = True
-    if keys[K_RIGHT]:
-        actions["right"] = True
-
-    return actions
 
 
 def generate_asteroid(size):
@@ -117,25 +72,7 @@ def game(screen):
         paused ^= actions["pause"]
 
         if not paused:
-            if actions["fire"]:
-                pygame.mixer.Sound(SHOOT_SOUND_FILENAME).play()
-                bullet = player.shoot()
-                bullets.add(bullet)
-                all_sprites.add(bullet)
-
-            if actions["left"]:
-                player.rotate(-2)
-            if actions["right"]:
-                player.rotate(2)
-
-            if actions["accelerate"]:
-                player.accelerate()
-
-            if actions["recelerate"]:
-                player.recelerate()
-
-            if actions["stop"]:
-                player.stop()
+            do_actions(actions, all_sprites, bullets, player)
 
             if last_asteroid > 5000:
                 last_asteroid = 0
@@ -149,16 +86,8 @@ def game(screen):
                 sprite.pos[0] %= SCREEN_SIZE[0]
                 sprite.pos[1] %= SCREEN_SIZE[1]
 
-            collide_list = pygame.sprite.groupcollide(
-                asteroids, bullets, True, True, pygame.sprite.collide_mask)
-            for asteroid in collide_list:
-                score += 10
-                for i in asteroid.split():
-                    if isinstance(i, Powerup):
-                        powerups.add(i)
-                    else:
-                        asteroids.add(i)
-                    all_sprites.add(i)
+            score += collide_asteroids_bullets(asteroids, bullets, powerups,
+                                               all_sprites)
 
             collide_list = pygame.sprite.spritecollide(
                 player, powerups, True, pygame.sprite.collide_mask)
@@ -175,7 +104,7 @@ def game(screen):
             collide_list = pygame.sprite.spritecollide(
                 player, asteroids, True, pygame.sprite.collide_mask)
             for asteroid in collide_list:
-                if extra == False:
+                if not extra:
                     pygame.mixer.Sound(SHIP_EXPLOSION_SOUND_FILENAME).play()
                     player.die()
 
@@ -201,7 +130,7 @@ def game(screen):
                 (SCREEN_SIZE[0] // 2 - score_display.get_width() // 2, 15),
             )
 
-            if extra == True:
+            if extra:
                 shield_display = score_text.render("Shield On!!!", True, GREEN)
                 screen.blit(shield_display, (0, 15))
 
