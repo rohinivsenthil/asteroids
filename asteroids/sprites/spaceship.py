@@ -6,13 +6,13 @@ from pygame.locals import *
 
 from . import Bullet
 
-with open('config.json') as configfile:
-    config = json.load(configfile)['spaceship']
+with open("config.json") as configfile:
+    config = json.load(configfile)["spaceship"]
 
-IMAGE_FILENAME = config['ship']
-ACCELERATION = config['acceleration']
-MAX_SPEED = config['maxSpeed']
-IMAGE_BLAST = config['blast']
+IMAGE_FILENAME = config["ship"]
+ACCELERATION = config["acceleration"]
+MAX_SPEED = config["maxSpeed"]
+IMAGE_BLAST = config["blast"]
 
 spaceship_surface = pygame.image.load(IMAGE_FILENAME)
 
@@ -34,9 +34,9 @@ class Spaceship(pygame.sprite.Sprite):
         self.speed[0] += ACCELERATION * math.sin(math.radians(self.angle))
         self.speed[1] += ACCELERATION * -math.cos(math.radians(self.angle))
 
-    def recelerate(self): 
+    def recelerate(self):
         self.speed[0] -= ACCELERATION * math.sin(math.radians(self.angle))
-        self.speed[1] -= ACCELERATION * -math.cos(math.radians(self.angle)) 
+        self.speed[1] -= ACCELERATION * -math.cos(math.radians(self.angle))
 
     def stop(self):
         self.speed[0] = self.speed[1] = 0

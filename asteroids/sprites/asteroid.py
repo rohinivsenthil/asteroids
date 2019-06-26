@@ -7,11 +7,11 @@ from pygame.locals import *
 
 from .powerup import Powerup
 
-with open('config.json') as configfile:
-    config = json.load(configfile)['asteroid']
+with open("config.json") as configfile:
+    config = json.load(configfile)["asteroid"]
 
-MIN_RADIUS = config['minRadius']
-COLOR = pygame.Color(*config['color'])
+MIN_RADIUS = config["minRadius"]
+COLOR = pygame.Color(*config["color"])
 
 
 def linspace(start, stop, num_steps):
@@ -39,9 +39,13 @@ class Asteroid(pygame.sprite.Sprite):
     def __init__(self, radius, speed, pos):
         super().__init__()
 
-        points = generate_polygon((radius, radius),
-                                  radius - (radius / 5), (radius / 10), radius,
-                                  random.randint(10, 20))
+        points = generate_polygon(
+            (radius, radius),
+            radius - (radius / 5),
+            (radius / 10),
+            radius,
+            random.randint(10, 20),
+        )
 
         self.image = pygame.Surface((radius * 2, radius * 2), SRCALPHA, 32)
 
