@@ -14,8 +14,8 @@
 	"spaceship": {
 		"ship": "images/spaceship.png",
 		"blast": "images/shipExplosion.png",
-		"acceleration": 0.15,
-		"maxSpeed": 15
+		"acceleration": 1.5,
+		"maxSpeed": 100
 	},
 	"game": {
 		"shootSound": "sounds/shoot.wav",
@@ -28,7 +28,11 @@
 		"powerups": {
 			"bomb": {
 				"image": "images/bomb.png",
-				"generation": 0.5
+				"generation": 0.05
+			},
+			"shield": {
+				"image": "images/shield.png",
+				"generation": 0.05
 			}
 		}
 	}

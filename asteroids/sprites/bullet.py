@@ -4,12 +4,12 @@ import math
 import pygame
 from pygame.locals import *
 
-with open('config.json') as configfile:
-    config = json.load(configfile)['bullet']
+with open("config.json") as configfile:
+    config = json.load(configfile)["bullet"]
 
-IMAGE_FILENAME = config['image']
-SPEED = config['speed']
-MAX_DIST = config['maxDist']
+IMAGE_FILENAME = config["image"]
+SPEED = config["speed"]
+MAX_DIST = config["maxDist"]
 
 bullet_surface = pygame.image.load(IMAGE_FILENAME)
 
@@ -27,7 +27,7 @@ class Bullet(pygame.sprite.Sprite):
 
         self.speed = [
             math.sin(math.radians(angle)) * SPEED,
-            -math.cos(math.radians(angle)) * SPEED
+            -math.cos(math.radians(angle)) * SPEED,
         ]
 
     def update(self):

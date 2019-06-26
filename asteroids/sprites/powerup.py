@@ -5,12 +5,12 @@ import random
 import pygame
 from pygame.locals import *
 
-with open('config.json') as configfile:
-    config = json.load(configfile)['powerup']
+with open("config.json") as configfile:
+    config = json.load(configfile)["powerup"]
 
-SPEED = config['speed']
-TIME = config['time']
-POWERUPS = config['powerups']
+SPEED = config["speed"]
+TIME = config["time"]
+POWERUPS = config["powerups"]
 
 
 class Powerup(pygame.sprite.Sprite):
@@ -22,15 +22,15 @@ class Powerup(pygame.sprite.Sprite):
 
         self.time = 0
 
-        self.name = ''
+        self.name = ""
         self.image = pygame.Surface((0, 0))
         self.rect = self.image.get_rect(center=(0, 0))
 
         for (name, value) in POWERUPS.items():
-            s += value['generation']
-            if r < s:
+            s += value["generation"]
+            if r <= s:
                 self.name = name
-                self.image = pygame.image.load(value['image'])
+                self.image = pygame.image.load(value["image"])
                 self.rect = self.image.get_rect(center=pos)
                 self.mask = pygame.mask.from_surface(self.image)
                 break

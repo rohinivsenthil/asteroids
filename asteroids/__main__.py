@@ -6,11 +6,11 @@ from pygame.locals import *
 
 from .pages import game
 
-with open('config.json') as configfile:
+with open("config.json") as configfile:
     config = json.load(configfile)
 
-SCREEN_SIZE = config['screenSize']
-FRAMERATE = config['framerate']
+SCREEN_SIZE = config["screenSize"]
+FRAMERATE = config["framerate"]
 
 
 def main():
@@ -28,5 +28,5 @@ def main():
     pygame.quit()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
