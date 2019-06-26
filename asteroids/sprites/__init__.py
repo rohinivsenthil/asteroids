@@ -1,6 +1,9 @@
 from .asteroid import Asteroid
-from .bullet import Bullet
+from .bullet import AlternativeBullet, Bullet
 from .powerup import Powerup
-from .spaceship import Spaceship
+from .spaceship import AlternativeSpaceship, Spaceship
 
-__all__ = ["Asteroid", "Bullet", "Spaceship", "Powerup"]
+__all__ = [
+    "AlternativeBullet", "AlternativeSpaceship", "Asteroid", "Bullet",
+    "Spaceship", "Powerup"
+]
