@@ -15,6 +15,7 @@ SCREEN_SIZE = config["screenSize"]
 SHIP_EXPLOSION_SOUND_FILENAME = config["game"]["shipExplodeSound"]
 SHOOT_SOUND_FILENAME = config["game"]["shootSound"]
 BACKGROUND = pygame.Color(*config["game"]["background"])
+ASTEROID_GENERATION = config["asteroid"]["generation"]
 
 GREEN = (0, 255, 0)
 
@@ -74,7 +75,7 @@ def game(screen):
         if not paused:
             do_actions(actions, all_sprites, bullets, player)
 
-            if last_asteroid > 5000:
+            if last_asteroid == ASTEROID_GENERATION:
                 last_asteroid = 0
                 asteroid = generate_asteroid(
                     random.randint(config["asteroid"]["minRadius"],
@@ -136,7 +137,7 @@ def game(screen):
 
             pygame.display.update()
 
-            last_asteroid += clock.get_time()
+            last_asteroid += 1
             time_played += clock.get_time()
 
             for powerup in powerups:
