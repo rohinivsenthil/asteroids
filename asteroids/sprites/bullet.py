@@ -8,10 +8,12 @@ with open("config.json") as configfile:
     config = json.load(configfile)["bullet"]
 
 IMAGE_FILENAME = config["image"]
+ALTERNATIVE_IMAGE = config["alternativeImage"]
 SPEED = config["speed"]
 MAX_DIST = config["maxDist"]
 
 bullet_surface = pygame.image.load(IMAGE_FILENAME)
+alternative_bullet_surface = pygame.image.load(ALTERNATIVE_IMAGE)
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -39,3 +41,13 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
         self.rect.center = self.pos
+
+
+class AlternativeBullet(Bullet):
+    def __init__(self, angle, pos):
+        super().__init__(angle, pos)
+
+        self.image = pygame.transform.rotate(alternative_bullet_surface,
+                                             -angle)
+        self.rect = self.image.get_rect(center=pos)
+        self.mask = pygame.mask.from_surface(self.image)

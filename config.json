@@ -4,15 +4,18 @@
 	"asteroid": {
 		"color": [102, 86, 56],
 		"minRadius": 20,
-		"maxRadius": 60
+		"maxRadius": 60,
+		"generation": 300
 	},
 	"bullet": {
 		"image": "images/bullet.png",
+		"alternativeImage": "images/alternative_bullet.png",
 		"speed": 17,
 		"maxDist": 480
 	},
 	"spaceship": {
 		"ship": "images/spaceship.png",
+		"alternativeShip": "images/alternative_spaceship.png",
 		"blast": "images/shipExplosion.png",
 		"acceleration": 1.5,
 		"maxSpeed": 100
@@ -20,10 +23,10 @@
 	"game": {
 		"shootSound": "sounds/shoot.wav",
 		"shipExplodeSound": "sounds/shipExplosion.wav",
-		"background": [0, 0, 0]
+		"background": "images/background.png"
 	},
 	"powerup": {
-		"speed": 4,
+		"speed": 2,
 		"time": 10000,
 		"powerups": {
 			"bomb": {
@@ -32,6 +35,7 @@
 			},
 			"shield": {
 				"image": "images/shield.png",
+				"effect": "images/shield_effect.png",
 				"generation": 0.05
 			}
 		}
