@@ -23,10 +23,10 @@
 	"game": {
 		"shootSound": "sounds/shoot.wav",
 		"shipExplodeSound": "sounds/shipExplosion.wav",
-		"background": [0, 0, 0]
+		"background": "images/background.png"
 	},
 	"powerup": {
-		"speed": 4,
+		"speed": 2,
 		"time": 10000,
 		"powerups": {
 			"bomb": {
@@ -35,6 +35,7 @@
 			},
 			"shield": {
 				"image": "images/shield.png",
+				"effect": "images/shield_effect.png",
 				"generation": 0.05
 			}
 		}

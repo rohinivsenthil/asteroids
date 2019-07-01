@@ -9,6 +9,7 @@ with open("config.json") as configfile:
     config = json.load(configfile)
 
 SHOOT_SOUND_FILENAME = config["game"]["shootSound"]
+BACKGROUND = pygame.image.load(config["game"]["background"])
 
 
 def get_actions():
@@ -94,3 +95,8 @@ def do_actions(actions, all_sprites, bullets, player):
 
     if actions["stop"]:
         player.stop()
+
+
+def draw(sprites, screen):
+    screen.blit(BACKGROUND, (0, 0))
+    sprites.draw(screen)

@@ -5,7 +5,7 @@ import pygame
 from pygame.locals import *
 
 from ..sprites import Asteroid, Spaceship
-from .common import get_actions, collide_asteroids_bullets, do_actions
+from .common import get_actions, collide_asteroids_bullets, do_actions, draw
 
 with open("config.json") as configfile:
     config = json.load(configfile)
@@ -14,8 +14,8 @@ FRAMERATE = config["framerate"]
 SCREEN_SIZE = config["screenSize"]
 SHIP_EXPLOSION_SOUND_FILENAME = config["game"]["shipExplodeSound"]
 SHOOT_SOUND_FILENAME = config["game"]["shootSound"]
-BACKGROUND = pygame.Color(*config["game"]["background"])
 ASTEROID_GENERATION = config["asteroid"]["generation"]
+SHIELD_EFFECT = pygame.image.load(config["powerup"]["powerups"]["shield"]["effect"])
 
 GREEN = (0, 255, 0)
 
@@ -122,8 +122,7 @@ def game(screen):
                     asteroids.remove(asteroid)
 
             all_sprites.update()
-            screen.fill(BACKGROUND)
-            all_sprites.draw(screen)
+            draw(all_sprites, screen)
 
             score_display = score_text.render("Score: %i" % score, True, GREEN)
             screen.blit(
@@ -132,8 +131,7 @@ def game(screen):
             )
 
             if extra:
-                shield_display = score_text.render("Shield On!!!", True, GREEN)
-                screen.blit(shield_display, (0, 15))
+                screen.blit(SHIELD_EFFECT, (player.pos[0] - 65, player.pos[1] - 50))
 
             pygame.display.update()
 
