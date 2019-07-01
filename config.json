@@ -10,15 +10,14 @@
 	"bullet": {
 		"image": "images/bullet.png",
 		"alternativeImage": "images/alternative_bullet.png",
-		"speed": 17,
+		"speed": 10,
 		"maxDist": 480
 	},
 	"spaceship": {
 		"ship": "images/spaceship.png",
 		"alternativeShip": "images/alternative_spaceship.png",
-		"blast": "images/shipExplosion.png",
-		"acceleration": 1.5,
-		"maxSpeed": 100
+		"acceleration": 0.5,
+		"maxSpeed": 7
 	},
 	"game": {
 		"shootSound": "sounds/shoot.wav",

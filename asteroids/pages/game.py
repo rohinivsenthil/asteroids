@@ -107,14 +107,6 @@ def game(screen):
             for asteroid in collide_list:
                 if not extra:
                     pygame.mixer.Sound(SHIP_EXPLOSION_SOUND_FILENAME).play()
-                    player.die()
-
-                    all_sprites.add(player)
-                    screen.fill(BACKGROUND)
-                    all_sprites.draw(screen)
-                    pygame.display.update()
-
-                    clock.tick(2)
                     player.kill()
                     dead = True
                 else:

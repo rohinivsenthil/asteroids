@@ -13,7 +13,6 @@ IMAGE_FILENAME = config["ship"]
 ALTERNATIVE_IMAGE = config["alternativeShip"]
 ACCELERATION = config["acceleration"]
 MAX_SPEED = config["maxSpeed"]
-IMAGE_BLAST = config["blast"]
 
 spaceship_surface = pygame.image.load(IMAGE_FILENAME)
 alternative_spaceship_surface = pygame.image.load(ALTERNATIVE_IMAGE)
@@ -36,13 +35,6 @@ class Spaceship(pygame.sprite.Sprite):
         self.speed[0] += ACCELERATION * math.sin(math.radians(self.angle))
         self.speed[1] += ACCELERATION * -math.cos(math.radians(self.angle))
 
-    def recelerate(self):
-        self.speed[0] -= ACCELERATION * math.sin(math.radians(self.angle))
-        self.speed[1] -= ACCELERATION * -math.cos(math.radians(self.angle))
-
-    def stop(self):
-        self.speed[0] = self.speed[1] = 0
-
     def rotate(self, angle):
         self.angle += angle
 
@@ -64,16 +56,6 @@ class Spaceship(pygame.sprite.Sprite):
         self.pos[1] += self.speed[1]
 
         self.rect.center = self.pos
-
-    def die(self):
-        self.image = pygame.image.load(IMAGE_BLAST)
-
-        center = self.rect.center
-        self.rect = self.image.get_rect(center=center)
-
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect.center = self.pos
-
 
 class AlternativeSpaceship(Spaceship):
     def __init__(self, pos):

@@ -15,8 +15,6 @@ BACKGROUND = pygame.image.load(config["game"]["background"])
 def get_actions():
     actions = {
         "accelerate": False,
-        "recelerate": False,
-        "stop": False,
         "die": False,
         "left": False,
         "pause": False,
@@ -34,22 +32,13 @@ def get_actions():
                 actions["fire"] = True
             if event.key == K_p:
                 actions["pause"] = True
-            if event.key == K_UP:
-                actions["accelerate"] = True
-            if event.key == K_DOWN:
-                actions["recelerate"] = True
-        if event.type == KEYUP:
-            if event.key == K_UP or event.key == K_DOWN:
-                actions["accelerate"] = False
-                actions["recelerate"] = False
-                actions["stop"] = True
 
     keys = pygame.key.get_pressed()
 
     if keys[K_q]:
         actions["die"] = True
-    # if keys[K_UP]:
-    #     actions['accelerate'] = True
+    if keys[K_UP]:
+        actions['accelerate'] = True
     if keys[K_LEFT]:
         actions["left"] = True
     if keys[K_RIGHT]:
@@ -90,11 +79,6 @@ def do_actions(actions, all_sprites, bullets, player):
 
     if actions["accelerate"]:
         player.accelerate()
-    if actions["recelerate"]:
-        player.recelerate()
-
-    if actions["stop"]:
-        player.stop()
 
 
 def draw(sprites, screen):
