@@ -33,6 +33,14 @@
 			"shield": {
 				"image": "images/shield.png",
 				"generation": 0.05
+			},
+			"star": {
+				"image": "images/star.png",
+				"generation": 0.05
+			},
+			"diamond": {
+				"image": "images/diamond.png",
+				"generation": 0.05
 			}
 		}
 	}
