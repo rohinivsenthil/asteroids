@@ -95,15 +95,15 @@ def multiplayer_host(screen):
                     do_actions(actions1, all_sprites, bullets1, player1)
                     do_actions(actions2, all_sprites, bullets2, player2)
 
-                    if last_asteroid == ASTEROID_GENERATION:
-                        last_asteroid = 0
-                        asteroid = generate_asteroid(
-                            random.randint(
-                                config["asteroid"]["minRadius"],
-                                config["asteroid"]["maxRadius"],
-                            ))
-                        asteroids.add(asteroid)
-                        all_sprites.add(asteroid)
+                    #if last_asteroid == ASTEROID_GENERATION:
+                    #    last_asteroid = 0
+                    #    asteroid = generate_asteroid(
+                    #        random.randint(
+                    #            config["asteroid"]["minRadius"],
+                    #            config["asteroid"]["maxRadius"],
+                    #        ))
+                    #    asteroids.add(asteroid)
+                    #    all_sprites.add(asteroid)
 
                     for sprite in all_sprites:
                         sprite.pos[0] %= SCREEN_SIZE[0]
@@ -184,7 +184,7 @@ def multiplayer_host(screen):
 
                     pygame.display.update()
 
-                    last_asteroid += 1
+                    #last_asteroid += 1
                     time_played += clock.get_time()
 
                     for powerup in powerups:
